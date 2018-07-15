@@ -18,7 +18,12 @@ public class tcpClient extends Client {
             Socket clientSocket = new Socket(serverIP, serverPort);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            outToServer.writeBytes(requestMessage);
+            //outToServer.writeBytes(requestMessage);
+            outToServer.writeBytes("ANANANAN");
+            System.out.println("Data flushed");
+            outToServer.flush();
+
+            Thread.sleep(2000);
             serverResponse = inFromServer.readLine();
             System.out.println("response from server:\n" + serverResponse);
             clientSocket.close();
