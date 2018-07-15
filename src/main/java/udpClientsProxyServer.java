@@ -7,8 +7,8 @@ import java.net.URL;
 /**
  * Created by ahmadi on 7/14/18.
  */
-public class udpClientProxyServer extends ProxyServer {
-    public udpClientProxyServer(String sourceIP, String sourcePort) {
+public class udpClientsProxyServer extends ProxyServer {
+    public udpClientsProxyServer(String sourceIP, String sourcePort) {
         super(sourceIP, sourcePort);
     }
 
@@ -17,7 +17,7 @@ public class udpClientProxyServer extends ProxyServer {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
+        if (responseCode == HttpURLConnection.HTTP_OK){
             // success
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));

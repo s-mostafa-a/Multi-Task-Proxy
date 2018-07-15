@@ -53,9 +53,9 @@ public class ProxyTest {
             System.out.println(destProtocol);
             ProxyServer proxyServer;
             if (sourceProtocol.compareTo("udp") == 0)
-                proxyServer = new udpClientProxyServer(sourceIp, sourcePort);
+                proxyServer = new udpClientsProxyServer(sourceIp, sourcePort);
             else
-                proxyServer = new tcpClientProxyServer(sourceIp, sourcePort);
+                proxyServer = new tcpClientsProxyServer(sourceIp, sourcePort);
             proxyServer.run();
         } catch (IOException e) {
         }

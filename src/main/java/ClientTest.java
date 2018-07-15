@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 public class ClientTest {
     public static void main(String[] args) {
         // sample input: GET / HTTP/1.1 Host: aut.ac.ir
+        // type=A server=217.215.155.155 target=aut.ac.ir
         Client client = new Client();
         boolean requestSuccseed = false;
         BufferedReader br = new BufferedReader(

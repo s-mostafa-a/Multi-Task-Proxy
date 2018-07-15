@@ -1,16 +1,17 @@
+import java.io.IOException;
 /**
  * Created by ahmadi on 7/14/18.
  */
 public class ProxyServer {
-    private String sourceIP;
-    private String sourcePort;
+    protected String sourceIP;
+    protected String sourcePort;
 
     public ProxyServer(String sourceIP, String sourcePort) {
         this.sourceIP = sourceIP;
         this.sourcePort = sourcePort;
     }
 
-    public void run() {
+    public void run() throws IOException {
     }
 
     private String resolve() {

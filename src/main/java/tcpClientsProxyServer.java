@@ -1,13 +1,26 @@
 import org.xbill.DNS.*;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 
 /**
  * Created by ahmadi on 7/14/18.
  */
-public class tcpClientProxyServer extends ProxyServer {
-    public tcpClientProxyServer(String sourceIP, String sourcePort) {
+public class tcpClientsProxyServer extends ProxyServer {
+    public tcpClientsProxyServer(String sourceIP, String sourcePort) {
         super(sourceIP, sourcePort);
+    }
+
+    @Override
+    public void run() throws IOException {
+        ServerSocket server = new ServerSocket(8080);
+        System.out.println("Server listening on port " + sourcePort + "!");
+        while (true) {
+            Socket socket = server.accept();
+            new tcpClientsProxyServerThread(socket).start();
+        }
     }
 
     //works fine
