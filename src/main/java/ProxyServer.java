@@ -4,9 +4,9 @@ import java.io.IOException;
  */
 public class ProxyServer {
     protected String sourceIP;
-    protected String sourcePort;
+    protected int sourcePort;
 
-    public ProxyServer(String sourceIP, String sourcePort) {
+    public ProxyServer(String sourceIP, int sourcePort) {
         this.sourceIP = sourceIP;
         this.sourcePort = sourcePort;
     }

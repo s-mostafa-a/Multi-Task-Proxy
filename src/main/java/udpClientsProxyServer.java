@@ -8,7 +8,7 @@ import java.net.URL;
  * Created by ahmadi on 7/14/18.
  */
 public class udpClientsProxyServer extends ProxyServer {
-    public udpClientsProxyServer(String sourceIP, String sourcePort) {
+    public udpClientsProxyServer(String sourceIP, int sourcePort) {
         super(sourceIP, sourcePort);
     }
 
