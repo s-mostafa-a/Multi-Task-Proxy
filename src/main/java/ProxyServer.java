@@ -9,6 +9,8 @@ public class ProxyServer {
         this.sourcePort = sourcePort;
     }
     public void run(){
-
+    }
+    private String resolve(){
+        return "";
     }
 }

@@ -10,7 +10,7 @@ public class tcpClientProxyServer extends ProxyServer {
         super(sourceIP, sourcePort);
     }
     //works fine
-    private static String resolve(String host, int type, String DNSServer) {
+    private String resolve(String host, int type, String DNSServer) {
         try {
             Lookup lookup = new Lookup(host, type);
             SimpleResolver resolver = new SimpleResolver(DNSServer);
