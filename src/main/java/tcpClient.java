@@ -24,8 +24,7 @@ public class tcpClient extends Client {
             serverResponse = inFromServer.readLine();
             System.out.println("response from server:\n" + serverResponse);
             clientSocket.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

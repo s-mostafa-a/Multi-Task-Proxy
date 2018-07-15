@@ -22,20 +22,12 @@ public class tcpClientsProxyServerThread extends Thread {
     @Override
     public void run() {
         System.out.println("Running thread");
-        String clientEntry = "";
+        String clientEntry;
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             while (!reader.ready())
                 ;
-            /*
-            String line;
-            while(!(line=reader.readLine()).isEmpty())
-                {clientEntry = clientEntry + line;}
-            */
-            /*String line;
-            while(!(line=reader.readLine()).isEmpty())
-                clientEntry = clientEntry + line;*/
             clientEntry = reader.readLine();
             System.out.println(clientEntry);
             // processing string
@@ -62,7 +54,7 @@ public class tcpClientsProxyServerThread extends Thread {
                     break;
                 target = target + clientEntryChar[i];
             }
-            //
+            // string processing finished
             int intType;
             if (type.compareTo("a") == 0)
                 intType = Type.A;
