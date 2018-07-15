@@ -7,7 +7,8 @@ public class Client {
     protected String requestMessage;
     protected int responseNumber;
     protected String host;
-    Client(){
+
+    Client() {
         requestAnswered = false;
         responseNumber = 0;
     }
@@ -15,15 +16,19 @@ public class Client {
     public boolean isRequestAnswered() {
         return requestAnswered;
     }
-    public void setRequestMessage(String message){
+
+    public void setRequestMessage(String message) {
         requestMessage = message;
     }
-    public int getResponseNumber(){
+
+    public int getResponseNumber() {
         return responseNumber;
     }
 
     public void setHost(String host) {
         this.host = host;
     }
-    public void run(){}
+
+    public void run() {
+    }
 }

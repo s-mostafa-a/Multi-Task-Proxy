@@ -4,13 +4,16 @@
 public class ProxyServer {
     private String sourceIP;
     private String sourcePort;
-    public ProxyServer(String sourceIP, String sourcePort){
+
+    public ProxyServer(String sourceIP, String sourcePort) {
         this.sourceIP = sourceIP;
         this.sourcePort = sourcePort;
     }
-    public void run(){
+
+    public void run() {
     }
-    private String resolve(){
+
+    private String resolve() {
         return "";
     }
 }

@@ -9,6 +9,7 @@ public class tcpClientProxyServer extends ProxyServer {
     public tcpClientProxyServer(String sourceIP, String sourcePort) {
         super(sourceIP, sourcePort);
     }
+
     //works fine
     private String resolve(String host, int type, String DNSServer) {
         try {
@@ -24,7 +25,7 @@ public class tcpClientProxyServer extends ProxyServer {
             for (Record record : records) {
                 if (type == Type.A) {
                     response = response + ((ARecord) record).getAddress().getHostAddress() + "\n";
-                } else if (type == Type.CNAME){
+                } else if (type == Type.CNAME) {
                     response = response + ((CNAMERecord) record).getTarget() + "\n";
                 }
             }

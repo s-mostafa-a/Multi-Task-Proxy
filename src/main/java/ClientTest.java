@@ -37,18 +37,18 @@ public class ClientTest {
                 client.run();
                 //client send
                 int counter = 0;
-                while(!client.isRequestAnswered()){
+                while (!client.isRequestAnswered()) {
                     Thread.sleep(100);
                     counter++;
-                    if (counter == 100){
+                    if (counter == 100) {
                         System.out.println("Response not received!");
                         break;
                     }
                 }
-                if (counter < 100){
+                if (counter < 100) {
                     requestSuccseed = true;
                 }
-                if (client.responseNumber != 200){
+                if (client.responseNumber != 200) {
                     System.out.println("Your request failed with code: " + client.responseNumber);
                     requestSuccseed = false;
                 }
@@ -57,6 +57,7 @@ public class ClientTest {
 
         }
     }
+
     public static String getHostAddress(String string) {
         int index = string.indexOf("host:") + 5;
         char[] chars = string.toCharArray();
