@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class ProxyTest {
 
     public static void main(String[] args) {
-        //sample input : -d tcp -s udp:127.0.0.1:80
+        //sample input : -d udp -s tcp:127.0.0.1:8001
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(System.in));
         String sourceProtocol = "";
@@ -53,10 +53,9 @@ public class ProxyTest {
             System.out.println(destProtocol);
             ProxyServer proxyServer;
             if (sourceProtocol.compareTo("udp") == 0)
-                proxyServer = new udpClientsProxyServer(sourceIp, Integer.parseInt(sourcePort));
+                new udpClientsProxyServer(sourceIp, Integer.parseInt(sourcePort)).run();
             else
-                proxyServer = new tcpClientsProxyServer(sourceIp, Integer.parseInt(sourcePort));
-            proxyServer.run();
+                new tcpClientsProxyServer(sourceIp, Integer.parseInt(sourcePort)).run();
         } catch (IOException e) {
         }
     }

@@ -15,17 +15,20 @@ public class tcpClientsProxyServerThread extends Thread {
     public tcpClientsProxyServerThread(Socket socket) {
         super();
         this.socket = socket;
+        System.out.println("New thread starting!");
     }
 
 
     @Override
     public void run() {
-        String clientEntry;
+        System.out.println("Running thread");
+        String clientEntry = "";
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            while(!reader.ready())
+                System.out.println("an");;
             clientEntry = reader.readLine();
-
             // processing string
             clientEntry = clientEntry.toLowerCase();
             char[] clientEntryChar = clientEntry.toCharArray();
@@ -35,24 +38,24 @@ public class tcpClientsProxyServerThread extends Thread {
             String type = "";
             String server = "";
             String target = "";
-            for (int i = indexOfType + 5; i < clientEntry.length(); i++){
+            for (int i = indexOfType + 5; i < clientEntry.length(); i++) {
                 if (clientEntryChar[i] == ' ')
                     break;
                 type = type + clientEntryChar[i];
             }
-            for (int i = indexOfServer + 7; i < clientEntry.length(); i++){
+            for (int i = indexOfServer + 7; i < clientEntry.length(); i++) {
                 if (clientEntryChar[i] == ' ')
                     break;
                 server = server + clientEntryChar[i];
             }
-            for (int i = indexOfTarget + 7; i < clientEntry.length(); i++){
+            for (int i = indexOfTarget + 7; i < clientEntry.length(); i++) {
                 if (clientEntryChar[i] == ' ')
                     break;
                 target = target + clientEntryChar[i];
             }
             //
             int intType;
-            if (type.compareTo("a")==0)
+            if (type.compareTo("a") == 0)
                 intType = Type.A;
             else
                 intType = Type.CNAME;
@@ -61,8 +64,9 @@ public class tcpClientsProxyServerThread extends Thread {
             outputStream.flush();
             outputStream.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
+        System.out.println("Thread finishing!");
     }
 
     //works fine

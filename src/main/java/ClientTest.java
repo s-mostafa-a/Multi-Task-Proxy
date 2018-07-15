@@ -7,14 +7,13 @@ import java.util.StringTokenizer;
  */
 public class ClientTest {
     public static void main(String[] args) {
-        // sample input: GET / HTTP/1.1 Host: aut.ac.ir
-        // type=A server=217.215.155.155 target=aut.ac.ir
+        // sample inputs: GET / HTTP/1.1 Host: aut.ac.ir
+        //                type=A server=217.215.155.155 target=aut.ac.ir
         Client client = new Client();
-        boolean requestSuccseed = false;
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(System.in));
         StringTokenizer st;
-        System.out.println("Enter your client type:");
+        System.out.println("Enter your client type, proxy server's ip, and port:");
         try {
             st = new StringTokenizer(br.readLine());
             String s = st.nextToken();
@@ -23,54 +22,22 @@ public class ClientTest {
             } else if (s.compareTo("tcp") == 0) {
                 client = new tcpClient();
             }
-            while (!requestSuccseed) {
-                System.out.println("Enter your request: ");
-                String message = br.readLine();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    message = message + line;
-                }
-                client.setRequestMessage(message);
-                message.toLowerCase();
-                String hostString = getHostAddress(message);
-                client.setHost(hostString);
-                //
-                client.run();
-                //client send
-                int counter = 0;
-                while (!client.isRequestAnswered()) {
-                    Thread.sleep(100);
-                    counter++;
-                    if (counter == 100) {
-                        System.out.println("Response not received!");
-                        break;
-                    }
-                }
-                if (counter < 100) {
-                    requestSuccseed = true;
-                }
-                if (client.responseNumber != 200) {
-                    System.out.println("Your request failed with code: " + client.responseNumber);
-                    requestSuccseed = false;
-                }
-            }
+            String serverIP = st.nextToken();
+            int port = Integer.parseInt(st.nextToken());
+            // sending the request is all on client's class side
+            System.out.println("Enter your request: ");
+            String message = br.readLine();
+            client.setRequestMessage(message);
+            client.setServerIP(serverIP);
+            client.setServerPort(port);
+            //
+            client.run();
+            //client send
+
+
         } catch (Exception e) {
 
         }
     }
 
-    public static String getHostAddress(String string) {
-        int index = string.indexOf("host:") + 5;
-        char[] chars = string.toCharArray();
-        String host = "";
-        if (chars[index] == ' ') {
-            index++;
-        }
-        for (int i = index; i < string.length(); i++) {
-            if (chars[i] == ' ')
-                break;
-            host = host + chars[i];
-        }
-        return host;
-    }
 }

@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /**
  * Created by ahmadi on 7/14/18.
  * sends udp to proxy server
@@ -6,7 +8,8 @@ public class Client {
     protected boolean requestAnswered;
     protected String requestMessage;
     protected int responseNumber;
-    protected String host;
+    protected String serverIP;
+    protected int serverPort;
 
     Client() {
         requestAnswered = false;
@@ -25,10 +28,14 @@ public class Client {
         return responseNumber;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setServerIP(String ip) {
+        this.serverIP = ip;
     }
 
-    public void run() {
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public void run() throws IOException {
     }
 }
