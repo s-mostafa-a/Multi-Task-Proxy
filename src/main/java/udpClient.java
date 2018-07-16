@@ -36,7 +36,7 @@ public class udpClient extends Client {
             do {
                 receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 clientSocket.receive(receivePacket);
-                modifiedSentence = new String(receivePacket.getData());
+                modifiedSentence = new String(receiveData,0,receiveData.length);
                 chars = modifiedSentence.toCharArray();
                 if (desiredSeqNum == chars[1]) {
                     desiredSeqNum = (((Integer.parseInt("" + desiredSeqNum) + 1) % 2) + "").toCharArray()[0];
