@@ -56,7 +56,7 @@ public class udpClientsProxyServerThread extends Thread {
         return port;
     }
 
-    public void setRequest(String request) {
+    public String setRequest(String request) {
         request = request.toLowerCase();
         char[] rchars = request.toCharArray();
         int index = request.indexOf("host:") + 6;
@@ -68,7 +68,7 @@ public class udpClientsProxyServerThread extends Thread {
             URL = URL + rchars[i];
         }
         System.out.println("URL: " + URL);
-
+        return  URL;
     }
 
     @Override

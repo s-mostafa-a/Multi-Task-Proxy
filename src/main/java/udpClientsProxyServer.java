@@ -10,10 +10,13 @@ import java.util.Arrays;
  */
 public class udpClientsProxyServer extends ProxyServer {
     ArrayList<udpClientsProxyServerThread> workers;
-
+    ArrayList<String> requestedURLs;
+    ArrayList<String> answers;
     public udpClientsProxyServer(String sourceIP, int sourcePort) {
         super(sourceIP, sourcePort);
         workers = new ArrayList<udpClientsProxyServerThread>();
+        requestedURLs = new ArrayList<String>();
+        answers = new ArrayList<String>();
     }
 
     @Override
@@ -21,10 +24,9 @@ public class udpClientsProxyServer extends ProxyServer {
         DatagramSocket server;
         try {
             server = new DatagramSocket(sourcePort);
-
-            byte[] receiveData = new byte[1024];
             System.out.println("Server listening on port " + sourcePort + " for udp!");
             while (true) {
+                byte[] receiveData = new byte[1024];
                 boolean flag = false;
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 server.receive(receivePacket);
@@ -44,7 +46,7 @@ public class udpClientsProxyServer extends ProxyServer {
                 if (!flag) {
                     System.out.println("This was request!");
                     udpClientsProxyServerThread jadid = new udpClientsProxyServerThread(IPAddress, port);
-                    jadid.setRequest(sentence);
+                    requestedURLs.add(jadid.setRequest(sentence));
                     workers.add(jadid);
                     jadid.start();
                 }
