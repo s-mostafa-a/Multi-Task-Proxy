@@ -5,27 +5,15 @@ import java.io.IOException;
  * sends udp to proxy server
  */
 public class Client {
-    protected boolean requestAnswered;
     protected String requestMessage;
-    protected int responseNumber;
     protected String serverIP;
     protected int serverPort;
 
     Client() {
-        requestAnswered = false;
-        responseNumber = 0;
-    }
-
-    public boolean isRequestAnswered() {
-        return requestAnswered;
     }
 
     public void setRequestMessage(String message) {
         requestMessage = message;
-    }
-
-    public int getResponseNumber() {
-        return responseNumber;
     }
 
     public void setServerIP(String ip) {

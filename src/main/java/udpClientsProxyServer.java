@@ -1,36 +1,46 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.lang.reflect.Array;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.ArrayList;
 
 /**
  * Created by ahmadi on 7/14/18.
  */
 public class udpClientsProxyServer extends ProxyServer {
+    ArrayList<udpClientsProxyServerThread> workers;
     public udpClientsProxyServer(String sourceIP, int sourcePort) {
         super(sourceIP, sourcePort);
+        workers = new ArrayList<udpClientsProxyServerThread>();
     }
 
-    private String resolve(String GET_URL) throws IOException {
-        URL obj = new URL(GET_URL);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        int responseCode = con.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+    @Override
+    public void run() {
+        DatagramSocket server;
+        try {
+            server = new DatagramSocket(sourcePort);
+
+        byte[] receiveData = new byte[1024];
+        byte[] sendData = new byte[1024];
+        System.out.println("Server listening on port " + sourcePort + " for udp!");
+        while (true) {
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            server.receive(receivePacket);
+            //inja stuck mishe
+            String sentence = new String(receivePacket.getData());
+            System.out.println("RECEIVED: " + sentence);
+            InetAddress IPAddress = receivePacket.getAddress();
+            int port = receivePacket.getPort();
+
+            try {
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            in.close();
-            return response.toString();
-        } else {
-            return "";
+            new tcpClientsProxyServerThread(socket).start();
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 }
