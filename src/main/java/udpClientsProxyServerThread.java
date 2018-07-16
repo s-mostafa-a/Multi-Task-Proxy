@@ -57,6 +57,7 @@ public class udpClientsProxyServerThread extends Thread {
     public int getPort() {
         return port;
     }
+
     public void reset(InetAddress ip, int port) throws IOException {
         this.port = port;
         this.ip = ip;
@@ -78,7 +79,7 @@ public class udpClientsProxyServerThread extends Thread {
             URL = URL + rchars[i];
         }
         System.out.println("URL: " + URL);
-        return  URL;
+        return URL;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class udpClientsProxyServerThread extends Thread {
             String response = resolve(URL);
             maxIndex = (int) (response.length()) / 1000;
             // segmenting data
-            for (int i = 0; i <= maxIndex ; i++) {
+            for (int i = 0; i <= maxIndex; i++) {
                 String edame = "1";
                 String seqNum = "0";
                 int finish = (i + 1) * 1000 - 1;
@@ -117,19 +118,44 @@ public class udpClientsProxyServerThread extends Thread {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+        while ((responseCode == HttpURLConnection.HTTP_OK) || (responseCode == HttpURLConnection.HTTP_MOVED_PERM) || (responseCode == HttpURLConnection.HTTP_MOVED_TEMP)) {
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                return response.toString();
             }
-            in.close();
-            return response.toString();
-        } else {
-            return "";
+            else{
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                String toBeWorkedWith = response.toString().toLowerCase();
+                char[] chars = toBeWorkedWith.toCharArray();
+                GET_URL = "";
+                int index = toBeWorkedWith.indexOf("location:") + 10;
+                for(int i = index; i < toBeWorkedWith.length(); i++){
+                    if(chars[i] == ' ')
+                        break;
+                    GET_URL = GET_URL + chars[i];
+                }
+                obj = new URL(GET_URL);
+                con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("GET");
+                responseCode = con.getResponseCode();
+            }
         }
+        return "ERROR " + responseCode + "!";
+
     }
 
 }
