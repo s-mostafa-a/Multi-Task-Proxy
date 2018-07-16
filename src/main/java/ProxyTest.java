@@ -8,7 +8,9 @@ import java.util.StringTokenizer;
  * receives udp and sends tcp. in return receives tcp and sends udp to first sender.
  */
 public class ProxyTest {
-
+    /**
+     * just single line input
+     * */
     public static void main(String[] args) {
         //sample input : -d udp -s tcp:127.0.0.1:8001
         BufferedReader br = new BufferedReader(

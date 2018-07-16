@@ -13,15 +13,16 @@ public class tcpClient extends Client {
 
     @Override
     public void run() {
-        String serverResponse;
+        String serverResponse = "";
         try {
             Socket clientSocket = new Socket(serverIP, serverPort);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outToServer.writeBytes(requestMessage + "\n");
-            System.out.println("Data flushed");
             outToServer.flush();
-            serverResponse = inFromServer.readLine();
+            String line;
+            while((line = inFromServer.readLine())!=null)
+                serverResponse = serverResponse + line;
             System.out.println("response from server:\n" + serverResponse);
             clientSocket.close();
         } catch (Exception e) {

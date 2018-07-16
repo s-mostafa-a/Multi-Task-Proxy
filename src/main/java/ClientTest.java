@@ -6,9 +6,16 @@ import java.util.StringTokenizer;
  * Created by ahmadi on 7/14/18.
  */
 public class ClientTest {
+    /**
+     * keep in mind, client entry should be single line, but response from server can be multi-line
+     * */
     public static void main(String[] args) {
-        // sample inputs: GET / HTTP/1.1 Host: aut.ac.ir
+        // sample inputs:
+        //                tcp 127.0.0.1 8001
+        // then
+        //                GET / HTTP/1.1 Host: aut.ac.ir
         //                type=A server=217.215.155.155 target=aut.ac.ir
+        //                type=CNAME server=8.8.8.8 target=www.bbc.com
         Client client = new Client();
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(System.in));

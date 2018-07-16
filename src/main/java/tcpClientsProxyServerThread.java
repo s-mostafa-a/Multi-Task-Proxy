@@ -29,7 +29,6 @@ public class tcpClientsProxyServerThread extends Thread {
             while (!reader.ready())
                 ;
             clientEntry = reader.readLine();
-            System.out.println(clientEntry);
             // processing string
             clientEntry = clientEntry.toLowerCase();
             char[] clientEntryChar = clientEntry.toCharArray();
