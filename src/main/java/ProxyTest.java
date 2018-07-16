@@ -12,7 +12,8 @@ public class ProxyTest {
      * just single line input
      * */
     public static void main(String[] args) {
-        //sample input : -d udp -s tcp:127.0.0.1:8001
+        //sample input for get: -d tcp -s udp:127.0.0.1:8001
+        //sample input for dns: -d udp -s tcp:127.0.0.1:8001
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(System.in));
         String sourceProtocol = "";

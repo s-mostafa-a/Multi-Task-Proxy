@@ -14,6 +14,7 @@ public class udpClientsProxyServerThread extends Thread {
     private int lastIndexSent;
     private String URL;
     private ArrayList<String> messages;
+    private int maxIndex;
 
     public udpClientsProxyServerThread(InetAddress ip, int port) {
         super();
@@ -22,14 +23,17 @@ public class udpClientsProxyServerThread extends Thread {
         this.ip = ip;
         lastIndexSent = 0;
         messages = new ArrayList<String>();
+        lastAck = "0";
     }
 
     public void ackReceived(String ack) throws IOException {
-        lastAck = ack;
+        lastAck = ack.toCharArray()[0] + "";
         sendNext();
     }
 
     public void sendNext() throws IOException {
+        if (lastIndexSent == maxIndex)
+            return;
         if (Integer.parseInt(lastAck) == (2 + lastIndexSent) % 2)
             return;
         DatagramSocket clientSocket = new DatagramSocket();
@@ -57,7 +61,7 @@ public class udpClientsProxyServerThread extends Thread {
         //working with string
         URL = "";
         for (int i = index; i < request.length(); i++) {
-            if (rchars[i] == ' ')
+            if (rchars[i] == ' ' || rchars[i] == '\u0000')
                 break;
             URL = URL + rchars[i];
         }
@@ -71,8 +75,9 @@ public class udpClientsProxyServerThread extends Thread {
         try {
             // get request to web-server
             String response = resolve(URL);
+            maxIndex = (int) (response.length()) / 1000;
             // segmenting data
-            for (int i = 0; i <= (int) (response.length()) / 1000; i++) {
+            for (int i = 0; i <= maxIndex ; i++) {
                 String edame = "1";
                 String seqNum = "0";
                 int finish = (i + 1) * 1000 - 1;

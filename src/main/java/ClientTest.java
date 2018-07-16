@@ -11,9 +11,10 @@ public class ClientTest {
      * */
     public static void main(String[] args) {
         // sample inputs:
+        //                udp 127.0.0.1 8001
         //                tcp 127.0.0.1 8001
         // then
-        //                GET / HTTP/1.1 Host: aut.ac.ir
+        //                GET / HTTP/1.1 Host: http://www.aut.ac.ir
         //                type=A server=217.215.155.155 target=aut.ac.ir
         //                type=CNAME server=8.8.8.8 target=www.bbc.com
         Client client = new Client();

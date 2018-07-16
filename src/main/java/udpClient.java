@@ -40,7 +40,7 @@ public class udpClient extends Client {
                 chars = modifiedSentence.toCharArray();
                 if (desiredSeqNum == chars[1]) {
                     desiredSeqNum = (((Integer.parseInt("" + desiredSeqNum) + 1) % 2) + "").toCharArray()[0];
-                    serverResponse = serverResponse + modifiedSentence.substring(2, modifiedSentence.length() - 1);
+                    serverResponse = serverResponse + modifiedSentence.substring(2, modifiedSentence.indexOf('\u0000'));
                 }
                 sendAck(desiredSeqNum);
             } while (chars[0] != '0');
@@ -52,7 +52,7 @@ public class udpClient extends Client {
     }
 
     public void sendAck(char desiredSeqNum) throws IOException {
-        DatagramPacket sendPacket = new DatagramPacket(("Waiting for " + desiredSeqNum).getBytes(), (desiredSeqNum + "").getBytes().length, ServerIPAddress, serverPort);
+        DatagramPacket sendPacket = new DatagramPacket((desiredSeqNum + "").getBytes(), (desiredSeqNum + "").getBytes().length, ServerIPAddress, serverPort);
         clientSocket.send(sendPacket);
     }
 }
