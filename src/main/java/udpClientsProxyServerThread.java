@@ -16,6 +16,10 @@ public class udpClientsProxyServerThread extends Thread {
     private ArrayList<String> messages;
     private int maxIndex;
 
+    public String getURL() {
+        return URL;
+    }
+
     public udpClientsProxyServerThread(InetAddress ip, int port) {
         super();
         System.out.println("New thread starting!");
@@ -26,13 +30,11 @@ public class udpClientsProxyServerThread extends Thread {
         lastAck = "0";
     }
 
-    public boolean ackReceived(String ack) throws IOException {
+    public void ackReceived(String ack) throws IOException {
         lastAck = ack.toCharArray()[0] + "";
-        if (lastIndexSent != maxIndex){
+        if (lastIndexSent != maxIndex)
             sendNext();
-            return false;
-        }
-        return true;
+
     }
 
     public void sendNext() throws IOException {
@@ -54,6 +56,14 @@ public class udpClientsProxyServerThread extends Thread {
 
     public int getPort() {
         return port;
+    }
+    public void reset(InetAddress ip, int port) throws IOException {
+        this.port = port;
+        this.ip = ip;
+        lastIndexSent = -1;
+        lastAck = "0";
+        System.out.println("Returning result from cache: ");
+        sendNext();
     }
 
     public String setRequest(String request) {

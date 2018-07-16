@@ -12,6 +12,7 @@ public class udpClientsProxyServer extends ProxyServer {
     ArrayList<udpClientsProxyServerThread> workers;
     ArrayList<String> requestedURLs;
     ArrayList<String> answers;
+
     public udpClientsProxyServer(String sourceIP, int sourcePort) {
         super(sourceIP, sourcePort);
         workers = new ArrayList<udpClientsProxyServerThread>();
@@ -31,24 +32,45 @@ public class udpClientsProxyServer extends ProxyServer {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 server.receive(receivePacket);
                 //inja stuck mishe
-                String sentence = new String(receiveData,0,receiveData.length);
+                String sentence = new String(receiveData, 0, receiveData.length);
                 System.out.println("RECEIVED: " + sentence);
                 InetAddress IPAddress = receivePacket.getAddress();
                 int port = receivePacket.getPort();
                 for (int i = 0; i < workers.size(); i++) {
-                    if ((workers.get(i).getPort() == port)&&(Arrays.equals(workers.get(i).getIp().getAddress(), IPAddress.getAddress()))){
-                        if (workers.get(i).ackReceived(sentence))
-                            workers.remove(i);
+                    if ((workers.get(i).getPort() == port) && (Arrays.equals(workers.get(i).getIp().getAddress(), IPAddress.getAddress()))) {
+                        workers.get(i).ackReceived(sentence);
                         flag = true;
                         System.out.println("This was Ack!");
                     }
                 }
                 if (!flag) {
                     System.out.println("This was request!");
-                    udpClientsProxyServerThread jadid = new udpClientsProxyServerThread(IPAddress, port);
-                    requestedURLs.add(jadid.setRequest(sentence));
-                    workers.add(jadid);
-                    jadid.start();
+
+                    // working with string
+                    String newSentence = sentence.toLowerCase();
+                    char[] rchars = newSentence.toCharArray();
+                    int index = newSentence.indexOf("host:") + 6;
+                    //working with string
+                    String URL = "";
+                    for (int i = index; i < newSentence.length(); i++) {
+                        if (rchars[i] == ' ' || rchars[i] == '\u0000')
+                            break;
+                        URL = URL + rchars[i];
+                    }
+                    //
+                    if (!requestedURLs.contains(URL)) {
+                        udpClientsProxyServerThread jadid = new udpClientsProxyServerThread(IPAddress, port);
+                        requestedURLs.add(jadid.setRequest(sentence));
+                        workers.add(jadid);
+                        jadid.start();
+                    }
+                    else{
+                        for (int i = 0; i < workers.size(); i++){
+                            if (URL.compareTo(workers.get(i).getURL()) == 0){
+                                workers.get(i).reset(IPAddress, port);
+                            }
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
