@@ -35,7 +35,8 @@ public class udpClientsProxyServer extends ProxyServer {
                 int port = receivePacket.getPort();
                 for (int i = 0; i < workers.size(); i++) {
                     if ((workers.get(i).getPort() == port)&&(Arrays.equals(workers.get(i).getIp().getAddress(), IPAddress.getAddress()))){
-                        workers.get(i).ackReceived(sentence);
+                        if (workers.get(i).ackReceived(sentence))
+                            workers.remove(i);
                         flag = true;
                         System.out.println("This was Ack!");
                     }

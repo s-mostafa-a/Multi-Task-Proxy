@@ -26,14 +26,16 @@ public class udpClientsProxyServerThread extends Thread {
         lastAck = "0";
     }
 
-    public void ackReceived(String ack) throws IOException {
+    public boolean ackReceived(String ack) throws IOException {
         lastAck = ack.toCharArray()[0] + "";
-        sendNext();
+        if (lastIndexSent != maxIndex){
+            sendNext();
+            return false;
+        }
+        return true;
     }
 
     public void sendNext() throws IOException {
-        if (lastIndexSent == maxIndex)
-            return;
         if (Integer.parseInt(lastAck) == (2 + lastIndexSent) % 2)
             return;
         DatagramSocket clientSocket = new DatagramSocket();
