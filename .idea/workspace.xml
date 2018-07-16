@@ -4,7 +4,6 @@
     <list default="true" id="1527a816-aa9e-4fad-8dc8-ec738440d82a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/udpClient.java" afterPath="$PROJECT_DIR$/src/main/java/udpClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/udpClientsProxyServer.java" afterPath="$PROJECT_DIR$/src/main/java/udpClientsProxyServer.java" />
     </list>
     <ignored path="My Networking Course Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,8 +89,8 @@
       <file leaf-file-name="udpClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/udpClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57974136">
-              <caret line="38" column="80" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.51724136">
+              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1023,12 +1022,12 @@
       <updated>1531650596238</updated>
       <workItem from="1531650597751" duration="15900000" />
       <workItem from="1531676609863" duration="4618000" />
-      <workItem from="1531730953366" duration="11814000" />
+      <workItem from="1531730953366" duration="11922000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32332000" />
+    <option name="totallyTimeSpent" value="32440000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1421,8 +1420,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/udpClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57974136">
-          <caret line="38" column="80" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
+        <state vertical-scroll-proportion="0.51724136">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
