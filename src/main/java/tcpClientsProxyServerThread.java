@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,14 @@ import java.util.List;
  */
 public class tcpClientsProxyServerThread extends Thread {
     Socket socket;
+    ArrayList<String> requests, responses;
 
-    public tcpClientsProxyServerThread(Socket socket) {
+    public tcpClientsProxyServerThread(Socket socket, ArrayList<String> requests, ArrayList<String> responses) {
         super();
         this.socket = socket;
         System.out.println("New thread starting!");
+        this.requests = requests;
+        this.responses = responses;
     }
 
 
@@ -59,7 +63,27 @@ public class tcpClientsProxyServerThread extends Thread {
                 intType = Type.A;
             else
                 intType = Type.CNAME;
-            String result = resolve(target, intType, server);
+
+
+            //cache checking
+            String result = "";
+            if(!requests.contains(type+server+target)){
+                result = resolve(target, intType, server);
+                requests.add(type+server+target);
+                responses.add(result);
+            }
+            else{
+                System.out.println("Returning result from cache!");
+                for (int i = 0; i < requests.size(); i++){
+                    if(requests.get(i).compareTo(type+server+target)==0){
+                        result = responses.get(i);
+                        break;
+                    }
+                }
+            }
+
+
+
             outputStream.writeBytes(result + "\n");
             outputStream.flush();
             outputStream.close();
