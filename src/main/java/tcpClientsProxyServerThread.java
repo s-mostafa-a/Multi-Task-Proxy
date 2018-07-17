@@ -72,7 +72,7 @@ public class tcpClientsProxyServerThread extends Thread {
                 ////
                 {
                     Runtime r = Runtime.getRuntime();
-                    Process p = r.exec("nslookup " + target + " " + server);
+                    Process p = r.exec("nslookup -type=" + type + " " + target + " " + server);
                     p.waitFor();
                     BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String line = "";
