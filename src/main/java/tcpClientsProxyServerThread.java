@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ahmadi on 7/15/18.
@@ -69,14 +68,25 @@ public class tcpClientsProxyServerThread extends Thread {
             //cache checking
             String result = "";
             if (!requests.contains(type + server + target)) {
+                boolean nonAuthorativeFlag = false;
                 ////
+                {
+                    Runtime r = Runtime.getRuntime();
+                    Process p = r.exec("nslookup " + target + " " + server);
+                    p.waitFor();
+                    BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    String line = "";
+
+                    while ((line = b.readLine()) != null) {
+                        if (line.contains("Non-authoritative")) {
+                            nonAuthorativeFlag = true;
+                        }
+                    }
+                    b.close();
+                }
                 ////
-                Map<String, String> env = System.getenv();
-                //env.put(Context.AUTHORITATIVE,"true");
                 String result1 = resolve(target, intType, server);
-                //env.put(Context.AUTHORITATIVE,"false");
-                String result2 = resolve(target, intType, server);
-                if ("".compareTo(result1) == 0) result = "Not Authoritative\n" + result2;
+                if (nonAuthorativeFlag) result = "Not Authoritative\n" + result1;
                 else result = "Authoritative\n" + result1;
                 requests.add(type + server + target);
                 responses.add(result);
