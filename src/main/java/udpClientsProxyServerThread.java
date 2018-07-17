@@ -32,14 +32,14 @@ public class udpClientsProxyServerThread extends Thread {
 
     public void ackReceived(String ack) throws IOException {
         lastAck = ack.toCharArray()[0] + "";
+        if (Integer.parseInt(lastAck) == (2 + lastIndexSent) % 2)
+            lastIndexSent--;
         if (lastIndexSent != maxIndex)
             sendNext();
 
     }
 
     public void sendNext() throws IOException {
-        if (Integer.parseInt(lastAck) == (2 + lastIndexSent) % 2)
-            return;
         DatagramSocket clientSocket = new DatagramSocket();
         lastIndexSent++;
         String toBeSent = messages.get(lastIndexSent);
@@ -129,8 +129,7 @@ public class udpClientsProxyServerThread extends Thread {
                 }
                 in.close();
                 return response.toString();
-            }
-            else{
+            } else {
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         con.getInputStream()));
                 String inputLine;
@@ -143,8 +142,8 @@ public class udpClientsProxyServerThread extends Thread {
                 char[] chars = toBeWorkedWith.toCharArray();
                 GET_URL = "";
                 int index = toBeWorkedWith.indexOf("location:") + 10;
-                for(int i = index; i < toBeWorkedWith.length(); i++){
-                    if(chars[i] == ' ')
+                for (int i = index; i < toBeWorkedWith.length(); i++) {
+                    if (chars[i] == ' ')
                         break;
                     GET_URL = GET_URL + chars[i];
                 }

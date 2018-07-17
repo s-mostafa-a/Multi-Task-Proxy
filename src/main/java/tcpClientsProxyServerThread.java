@@ -100,7 +100,9 @@ public class tcpClientsProxyServerThread extends Thread {
             SimpleResolver resolver = new SimpleResolver(DNSServer);
             resolver.setTimeout(5);
             lookup.setResolver(resolver);
+            
             Record[] result = lookup.run();
+            System.out.println();
             if (result == null) return null;
             List<Record> records = java.util.Arrays.asList(result);
             java.util.Collections.shuffle(records);
