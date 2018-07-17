@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Created by ahmadi on 7/15/18.
  */
@@ -67,7 +68,7 @@ public class tcpClientsProxyServerThread extends Thread {
 
             //cache checking
             String result = "";
-            if(!requests.contains(type+server+target)){
+            if (!requests.contains(type + server + target)) {
                 ////
                 ////
                 Map<String, String> env = System.getenv();
@@ -75,21 +76,19 @@ public class tcpClientsProxyServerThread extends Thread {
                 String result1 = resolve(target, intType, server);
                 //env.put(Context.AUTHORITATIVE,"false");
                 String result2 = resolve(target, intType, server);
-                if("".compareTo(result1)==0) result = "Not Authoritative\n" + result2;
+                if ("".compareTo(result1) == 0) result = "Not Authoritative\n" + result2;
                 else result = "Authoritative\n" + result1;
-                requests.add(type+server+target);
+                requests.add(type + server + target);
                 responses.add(result);
-            }
-            else{
+            } else {
                 System.out.println("Returning result from cache!");
-                for (int i = 0; i < requests.size(); i++){
-                    if(requests.get(i).compareTo(type+server+target)==0){
+                for (int i = 0; i < requests.size(); i++) {
+                    if (requests.get(i).compareTo(type + server + target) == 0) {
                         result = responses.get(i);
                         break;
                     }
                 }
             }
-
 
 
             outputStream.writeBytes(result + "\n");
