@@ -22,7 +22,7 @@ public class tcpClient extends Client {
             outToServer.flush();
             String line;
             while((line = inFromServer.readLine())!=null)
-                serverResponse = serverResponse + line;
+                serverResponse = serverResponse + line + "\n";
             System.out.println("response from server:\n" + serverResponse);
             clientSocket.close();
         } catch (Exception e) {

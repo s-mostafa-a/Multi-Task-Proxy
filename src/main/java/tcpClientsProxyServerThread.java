@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 /**
  * Created by ahmadi on 7/15/18.
  */
@@ -68,7 +68,13 @@ public class tcpClientsProxyServerThread extends Thread {
             //cache checking
             String result = "";
             if(!requests.contains(type+server+target)){
-                result = resolve(target, intType, server);
+                ////
+                ////
+                Map<String, String> env = System.getenv();
+                String result1 = resolve(target, intType, server);
+                String result2 = resolve(target, intType, server);
+                if("".compareTo(result1)==0) result = "Not Authoritative\n" + result2;
+                else result = "Authoritative\n" + result1;
                 requests.add(type+server+target);
                 responses.add(result);
             }
@@ -100,7 +106,7 @@ public class tcpClientsProxyServerThread extends Thread {
             SimpleResolver resolver = new SimpleResolver(DNSServer);
             resolver.setTimeout(5);
             lookup.setResolver(resolver);
-            
+
             Record[] result = lookup.run();
             System.out.println();
             if (result == null) return null;
