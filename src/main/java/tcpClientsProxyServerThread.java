@@ -71,7 +71,9 @@ public class tcpClientsProxyServerThread extends Thread {
                 ////
                 ////
                 Map<String, String> env = System.getenv();
+                //env.put(Context.AUTHORITATIVE,"true");
                 String result1 = resolve(target, intType, server);
+                //env.put(Context.AUTHORITATIVE,"false");
                 String result2 = resolve(target, intType, server);
                 if("".compareTo(result1)==0) result = "Not Authoritative\n" + result2;
                 else result = "Authoritative\n" + result1;
