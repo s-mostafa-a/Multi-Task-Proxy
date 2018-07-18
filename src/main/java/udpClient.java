@@ -12,10 +12,16 @@ public class udpClient extends Client {
     private DatagramSocket clientSocket;
     private boolean finished = false;
     private TimerCounter timerCounter;
+    private String serverResponse;
 
     udpClient() {
         super();
         desiredSeqNum = '0';
+        serverResponse = "";
+    }
+
+    public String getServerResponse() {
+        return serverResponse;
     }
 
     public boolean isFinished() {
@@ -25,7 +31,6 @@ public class udpClient extends Client {
     //request will not be segmented!
     @Override
     public void run() {
-        String serverResponse = "";
         try {
             clientSocket = new DatagramSocket();
             ServerIPAddress = InetAddress.getByName(serverIP);

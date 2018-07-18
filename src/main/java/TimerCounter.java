@@ -23,7 +23,8 @@ public class TimerCounter extends Thread {
         while (true) {
             try {
                 Thread.sleep(timePiece);
-                number++;
+                if(!(mycl.getServerResponse().compareTo("")==0))
+                    number++;
                 if (mycl.isFinished())
                     break;
                 if (number == maxNumber) {
