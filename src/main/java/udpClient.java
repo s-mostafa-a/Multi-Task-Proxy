@@ -1,7 +1,11 @@
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by ahmadi on 7/14/18.
@@ -59,6 +63,9 @@ public class udpClient extends Client {
             System.out.println("response from server:\n" + serverResponse);
             finished = true;
             clientSocket.close();
+            byte[] b = serverResponse.getBytes(StandardCharsets.UTF_8);
+            FileUtils.writeByteArrayToFile(new File("./file.jpg"), b);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
