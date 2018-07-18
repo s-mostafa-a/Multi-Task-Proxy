@@ -7,7 +7,7 @@ public class TimerCounter extends Thread {
     udpClient mycl;
     private int number;
     private final int timePiece = 100;
-    private final int maxNumber = 30;
+    private final int maxNumber = 1;
 
     TimerCounter(udpClient mycl) {
         this.mycl = mycl;
